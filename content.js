@@ -113,9 +113,6 @@ window.addEventListener('load', function load(event) {
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     const { text, className } = msg
     if (text === 'dom_elements') {
-        // Call the specified callback, passing
-        // the web-page's DOM content as argument
-        // traversePosts(document.querySelectorAll(className));
-        updatePosts()
+      updatePosts()
     }
 });
