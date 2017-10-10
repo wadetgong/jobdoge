@@ -38,6 +38,7 @@ const traversePosts = (domElements, hiddenPosts) => {
 }
 
 const updatePosts = () => {
+  console.log('updating posts')
   chrome.storage.sync.get(null, listHistory => {
     traversePosts(
       document.querySelectorAll('.results.jobs .views-row'),
@@ -48,11 +49,13 @@ const updatePosts = () => {
 
 
 window.addEventListener('load', function load(event) {
+  console.log('on load')
   window.removeEventListener('load', load, false)
   updatePosts()
 
   const content = document.querySelector('#content-area')
   content.addEventListener('DOMSubtreeModified', function() {
+    console.log('something change')
     updatePosts()
   })
 })
