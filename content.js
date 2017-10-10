@@ -12,9 +12,10 @@ const traversePosts = (domElements, hiddenPosts) => {
       let jobInfo = currentElem.querySelector('.job-title a')
       let hrefString = jobInfo.href
       let jobTitle = jobInfo.text
-      let company = currentElem
-        .querySelector('.job-company a')
-        .text
+      let companyInfo = currentElem.querySelector('.job-company a')
+      let company = companyInfo
+        ? companyInfo.text
+        : currentElem.querySelector('.job-company').innerHTML
 
       if (hiddenPosts[hrefString]) {
         // If job post matches a hidden post, hide the post
@@ -38,7 +39,6 @@ const traversePosts = (domElements, hiddenPosts) => {
 }
 
 const updatePosts = () => {
-  console.log('updating posts')
   chrome.storage.sync.get(null, listHistory => {
     traversePosts(
       document.querySelectorAll('.results.jobs .views-row'),
@@ -49,13 +49,11 @@ const updatePosts = () => {
 
 
 window.addEventListener('load', function load(event) {
-  console.log('on load')
   window.removeEventListener('load', load, false)
   updatePosts()
 
   const content = document.querySelector('#content-area')
   content.addEventListener('DOMSubtreeModified', function() {
-    console.log('something change')
     updatePosts()
   })
 })
