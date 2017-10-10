@@ -1,9 +1,11 @@
 #jobdoge-post {
   opacity: 1;
   height: 100%;
+  position: relative;
 }
 
 #jobdoge-hidden-post {
+  position: relative;
   transition: all 1s ease-out;
   background-color: lightgray;
   opacity: 0;
@@ -20,4 +22,18 @@
   border-radius: 4px;
   padding: 5px 20px;
   background-color: gray;
+}
+
+.doge-msg {
+  font-family: 'Comic Sans MS';
+  position: absolute;
+  z-index: 1;
+  font-size: 44px;
+  visibility: hidden;
+  transition: transform 1s
+}
+
+.doge-msg-hidden {
+  visibility: visible;
+  transform: translateY(-1em) !important;
 }
