@@ -56,9 +56,10 @@ const traversePosts = (domElements, hiddenPosts) => {
       let hrefString = jobInfo.href
       let jobTitle = jobInfo.text
       let host = jobInfo.hostname
-      let company = currentElem
-        .querySelector('.job-company a')
-        .text
+      let companyInfo = currentElem.querySelector('.job-company a')
+      let company = companyInfo
+        ? companyInfo.text
+        : currentElem.querySelector('.job-company').innerHTML
 
       if (hiddenPosts[hrefString]) {
         // If job post matches a hidden post, hide the post

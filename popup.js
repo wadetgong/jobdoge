@@ -1,7 +1,10 @@
 /* global chrome */
 
  const supportedSites = {
-  'www.builtinchicago.org': true
+  'www.builtinchicago.org': true,
+  'www.builtinnyc.com': true,
+  'www.builtinla.com': true,
+  'www.builtincolorado.com': true,
  }
 
 function getCurrentTabUrl(callback) {
