@@ -1,0 +1,23 @@
+#jobdoge-post {
+  opacity: 1;
+  height: 100%;
+}
+
+#jobdoge-hidden-post {
+  transition: all 1s ease-out;
+  background-color: lightgray;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.jobdoge-remove {
+  position: absolute;
+  right: 10px;
+  font-size: 12px;
+  border-radius: 4px;
+  padding: 5px 20px;
+  background-color: gray;
+}
