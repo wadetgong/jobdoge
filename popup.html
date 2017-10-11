@@ -3,17 +3,25 @@
   <head>
     <title>JobDoge - Much Assist</title>
     <link rel="stylesheet" type="text/css" href="popup.css">
+    <link href="https://fonts.googleapis.com/css?family=Mukta" rel="stylesheet">
     <script src="popup.js"></script>
   </head>
 
   <body>
-    <h1>JobDoge</h1>
+    <div class="container">
+      <div class="container">
+        <img id="doge-pic" src="doge.png">
+        <h1>JobDoge</h1>
+      </div>
+      <span id="hidden-info"></span>
+    </div>
+    <hr />
     <div class="column-container">
       <p id="support-info"></p>
       <a id="request-support" href="#"></a>
     </div>
-<!--     <button>
-      View Hidden Posts
-    </button> -->
+    <div class="column-container">
+      <button id="view-hidden">View My Hidden Posts</button>
+    </div>
   </body>
 </html>

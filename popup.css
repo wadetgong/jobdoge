@@ -1,10 +1,12 @@
 body {
   margin: 10px;
   white-space: nowrap;
+  font-family: 'Mukta', sans-serif;
 }
 
 h1 {
   font-size: 15px;
+  margin: 0;
 }
 
 .column-container {
@@ -19,10 +21,6 @@ h1 {
   justify-content: space-between;
 }
 
-.success {
-  color: darkgreen;
-}
-
 #support-info {
   margin: 0 3px;
 }
@@ -30,4 +28,13 @@ h1 {
 #request-support {
   font-size: 10px;
   text-align: center
+}
+
+#view-hidden {
+  margin: 0 10%;
+}
+
+#doge-pic {
+  margin: 5px;
+  height: 19px;
 }
