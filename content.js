@@ -88,7 +88,8 @@ const traversePosts = (domElements, hiddenPosts) => {
 
           // Save relevant data to storage
           let data = {}
-          data[hrefString] = {jobTitle, company, host}
+          let date = Date.now()
+          data[hrefString] = {jobTitle, company, host, date}
           chrome.storage.sync.set(data);
         });
         currentElem.prepend(button)
@@ -109,19 +110,7 @@ const updatePosts = () => {
   }
 }
 
-
-window.addEventListener('load', function load() {
-  window.removeEventListener('load', load, false)
-  updatePosts()
-
-  const { host } = window.location
-  if (supportedSites[host]) {
-    const content = document.querySelector('#content-area')
-    content.addEventListener('DOMSubtreeModified', function() {
-      updatePosts()
-    })
-  }
-
+const buildModal = () => {
   // Set up modal
   const modal = document.createElement('div')
   console.log(modal)
@@ -150,10 +139,41 @@ window.addEventListener('load', function load() {
   container.setAttribute('id', 'modal-container')
   modalContent.prepend(container)
 
-  // Add modal content to modal and add modal to DOM
+  // Add modal content to modal
   modal.prepend(modalContent)
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    console.log(event.target)
+    if (event.target === modal) {
+      modal.classList.add('jobdoge-modal-closed')
+      modal.classList.remove('jobdoge-modal-open')
+      modalContent.style.transform = 'translateY(-200px)'
+    }
+  }
+
+  return modal
+}
+
+
+window.addEventListener('load', function load() {
+  window.removeEventListener('load', load, false)
+  updatePosts()
+
+  const { host } = window.location
+  if (supportedSites[host]) {
+    const content = document.querySelector('#content-area')
+    content.addEventListener('DOMSubtreeModified', function() {
+      updatePosts()
+    })
+  }
+
+  // Build modal and attach to DOM
+  const modal = buildModal()
+  const modalContent = modal.querySelector('.jobdoge-modal-content')
   document.querySelector('body').prepend(modal)
 
+  // Add listener to listen for messages from popup
   chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     const { text } = msg
     if (text === 'open_modal') {
@@ -164,15 +184,5 @@ window.addEventListener('load', function load() {
     }
   });
 
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    console.log(event.target)
-    if (event.target === modal) {
-      console.log('updating stuff')
-      modal.classList.add('jobdoge-modal-closed')
-      modal.classList.remove('jobdoge-modal-open')
-      modalContent.style.transform = 'translateY(-200px)'
-    }
-  }
 })
 

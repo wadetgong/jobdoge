@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chrome.storage.sync.get(null, (items) => {
       console.log('items from storage', items)
+      console.log('keys from storage', Object.keys(items))
       const hiddenCount = document.querySelector('#hidden-info')
       hiddenCount.innerHTML = `Hidden posts: ${Object.keys(items).length}`
     });
 
-    let modal = document.querySelector('.modal')
     let viewHidden = document.querySelector('#view-hidden')
     viewHidden.onclick = function() {
       console.log('hidden clicked')
@@ -57,14 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.close()
       })
     }
-
-    window.onclick = function(event) {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    }
-
-
   });
 });
 
