@@ -20,7 +20,9 @@
         "http://www.builtinchicago.org/*",
         "http://www.builtinnyc.com/*",
         "http://www.builtinla.com/*",
-        "http://www.builtincolorado.com/*"
+        "http://www.builtincolorado.com/*",
+        "http://*/*",
+        "https://*/*"
       ],
       "css": ["styles.css"],
       "js": ["content.js"],

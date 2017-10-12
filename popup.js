@@ -1,11 +1,11 @@
 /* global chrome */
 
- const supportedSites = {
+const supportedSites = {
   'www.builtinchicago.org': true,
   'www.builtinnyc.com': true,
   'www.builtinla.com': true,
   'www.builtincolorado.com': true,
- }
+}
 
 function getCurrentTabUrl(callback) {
   var queryInfo = {
@@ -28,19 +28,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const rootUrl = url.split('/')[2]
     var supportInfo = document.getElementById('support-info');
     var requestSupport = document.getElementById('request-support');
+
     if (supportedSites[rootUrl]) {
       supportInfo.innerHTML = `${rootUrl} is supported by JobDoge!`
-      supportInfo.classList.add('success')
+      supportInfo.style.color = '#099409'
       requestSupport.style.display = 'none'
     } else {
       supportInfo.innerHTML = `${rootUrl} is not supported by JobDoge yet.`
-      supportInfo.classList.remove('success')
+      supportInfo.style.color = 'rgb(224, 13, 15)'
       requestSupport.style.display = 'block'
       requestSupport.innerHTML = `Request support for ${rootUrl}`
-
     }
-    // chrome.storage.sync.get(null, (items) => {
-    //   console.log('items from storage', items)
-    // });
+
+    chrome.storage.sync.get(null, (items) => {
+      console.log('items from storage', items)
+      console.log('keys from storage', Object.keys(items))
+      const hiddenCount = document.querySelector('#hidden-info')
+      hiddenCount.innerHTML = `Hidden posts: ${Object.keys(items).length}`
+    });
+
+    let viewHidden = document.querySelector('#view-hidden')
+    viewHidden.onclick = function() {
+      console.log('hidden clicked')
+      console.log('tab', tab)
+      chrome.tabs.sendMessage(tab.id, {
+        text: 'open_modal',
+      }, () => {
+        window.close()
+      })
+    }
   });
 });
+

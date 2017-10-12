@@ -1,5 +1,12 @@
 /* global chrome */
 
+const supportedSites = {
+  'www.builtinchicago.org': true,
+  'www.builtinnyc.com': true,
+  'www.builtinla.com': true,
+  'www.builtincolorado.com': true,
+}
+
 const chooseRandom = arr => {
   const randomIndex = Math.floor(Math.random() * arr.length)
   return arr[randomIndex]
@@ -81,7 +88,8 @@ const traversePosts = (domElements, hiddenPosts) => {
 
           // Save relevant data to storage
           let data = {}
-          data[hrefString] = {jobTitle, company, host}
+          let date = Date.now()
+          data[hrefString] = {jobTitle, company, host, date}
           chrome.storage.sync.set(data);
         });
         currentElem.prepend(button)
@@ -91,28 +99,90 @@ const traversePosts = (domElements, hiddenPosts) => {
 }
 
 const updatePosts = () => {
-  chrome.storage.sync.get(null, listHistory => {
-    traversePosts(
-      document.querySelectorAll('.results.jobs .views-row'),
-      listHistory
-    )
-  })
+  const { host } = window.location
+  if (supportedSites[host]) {
+    chrome.storage.sync.get(null, listHistory => {
+      traversePosts(
+        document.querySelectorAll('.results.jobs .views-row'),
+        listHistory
+      )
+    })
+  }
+}
+
+const buildModal = () => {
+  // Set up modal
+  const modal = document.createElement('div')
+  console.log(modal)
+  modal.classList.add('jobdoge-modal')
+  modal.classList.add('jobdoge-modal-closed')
+
+  // Set up modal content
+  const modalContent = document.createElement('div')
+  modalContent.classList.add('jobdoge-modal-content')
+  modalContent.style.transform = 'translateY(-200px)'
+
+  // Set up close button on modal
+  const closeButton = document.createElement('span')
+  closeButton.innerHTML = '&times;'
+  closeButton.onclick = function() {
+    modal.classList.add('jobdoge-modal-closed')
+    modal.classList.remove('jobdoge-modal-open')
+    modalContent.style.transform = 'translateY(-200px)'
+  }
+  closeButton.classList.add('close')
+  modalContent.prepend(closeButton)
+
+  // Set up container in modal content
+  const container = document.createElement('div')
+  container.classList.add('container')
+  container.setAttribute('id', 'modal-container')
+  modalContent.prepend(container)
+
+  // Add modal content to modal
+  modal.prepend(modalContent)
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    console.log(event.target)
+    if (event.target === modal) {
+      modal.classList.add('jobdoge-modal-closed')
+      modal.classList.remove('jobdoge-modal-open')
+      modalContent.style.transform = 'translateY(-200px)'
+    }
+  }
+
+  return modal
 }
 
 
-window.addEventListener('load', function load(event) {
+window.addEventListener('load', function load() {
   window.removeEventListener('load', load, false)
   updatePosts()
 
-  const content = document.querySelector('#content-area')
-  content.addEventListener('DOMSubtreeModified', function() {
-    updatePosts()
-  })
+  const { host } = window.location
+  if (supportedSites[host]) {
+    const content = document.querySelector('#content-area')
+    content.addEventListener('DOMSubtreeModified', function() {
+      updatePosts()
+    })
+  }
+
+  // Build modal and attach to DOM
+  const modal = buildModal()
+  const modalContent = modal.querySelector('.jobdoge-modal-content')
+  document.querySelector('body').prepend(modal)
+
+  // Add listener to listen for messages from popup
+  chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+    const { text } = msg
+    if (text === 'open_modal') {
+      console.log('open modal')
+      modal.classList.add('jobdoge-modal-open')
+      modal.classList.remove('jobdoge-modal-closed')
+      modalContent.style.transform = 'translateY(0px)'
+    }
+  });
+
 })
 
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    const { text, className } = msg
-    if (text === 'dom_elements') {
-      updatePosts()
-    }
-});
