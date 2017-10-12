@@ -33,11 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
       supportInfo.innerHTML = `${rootUrl} is supported by JobDoge!`
       supportInfo.style.color = '#099409'
       requestSupport.style.display = 'none'
-    } else {
+    } else if (rootUrl && rootUrl !== 'newtab') {
       supportInfo.innerHTML = `${rootUrl} is not supported by JobDoge yet.`
       supportInfo.style.color = 'rgb(224, 13, 15)'
       requestSupport.style.display = 'block'
       requestSupport.innerHTML = `Request support for ${rootUrl}`
+      requestSupport.href = `mailto:jobdoge@gmail.com?subject=JobDoge%20Support%20Request&body=Please%20add%20support%20for%20${rootUrl}`
     }
 
     chrome.storage.sync.get(null, (items) => {

@@ -2,6 +2,7 @@ body {
   margin: 10px;
   white-space: nowrap;
   font-family: 'Mukta', sans-serif;
+  min-width: 250px;
 }
 
 h1 {
