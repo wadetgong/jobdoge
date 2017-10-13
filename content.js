@@ -113,7 +113,6 @@ const updatePosts = () => {
 const buildModal = () => {
   // Set up modal
   const modal = document.createElement('div')
-  console.log(modal)
   modal.classList.add('jobdoge-modal')
   modal.classList.add('jobdoge-modal-closed')
 
@@ -135,8 +134,7 @@ const buildModal = () => {
 
   // Set up container in modal content
   const container = document.createElement('div')
-  container.classList.add('container')
-  container.setAttribute('id', 'modal-container')
+  container.setAttribute('id', 'jobdoge-modal-container')
   modalContent.prepend(container)
 
   // Add modal content to modal
@@ -144,7 +142,6 @@ const buildModal = () => {
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
-    console.log(event.target)
     if (event.target === modal) {
       modal.classList.add('jobdoge-modal-closed')
       modal.classList.remove('jobdoge-modal-open')
@@ -155,6 +152,48 @@ const buildModal = () => {
   return modal
 }
 
+const buildRow = (url, post) => {
+  const { company, date, host, jobTitle} = post
+
+  // Create row div
+  let row = document.createElement('div')
+  row.classList.add('jobdoge-row')
+
+  // Create date column
+  let dateCol = document.createElement('p')
+  let dateStr = new Date(post.date).toString().slice(4, 15)
+  dateCol.innerHTML = dateStr
+
+  // Create job name column
+  let jobCol = document.createElement('a')
+  jobCol.target = '_blank'
+  jobCol.innerHTML = jobTitle
+  jobCol.href = url
+
+  // Create company name column
+  let compCol = document.createElement('p')
+  compCol.innerHTML = company
+
+  // Create unhide button
+  let unhideButton = document.createElement('button')
+  unhideButton.innerHTML = 'Unhide'
+  unhideButton.onclick = function() {
+    chrome.storage.sync.remove([url], function() {
+      console.log('removed url ', url)
+      var error = chrome.runtime.lastError
+      if (error) console.error(error)
+      else row.remove()
+    })
+  }
+
+  // Add elements to row div
+  row.append(dateCol)
+  row.append(compCol)
+  row.append(jobCol)
+  row.append(unhideButton)
+
+  return row
+}
 
 window.addEventListener('load', function load() {
   window.removeEventListener('load', load, false)
@@ -177,12 +216,30 @@ window.addEventListener('load', function load() {
   chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     const { text } = msg
     if (text === 'open_modal') {
-      console.log('open modal')
       modal.classList.add('jobdoge-modal-open')
       modal.classList.remove('jobdoge-modal-closed')
       modalContent.style.transform = 'translateY(0px)'
-    }
-  });
 
+      chrome.storage.sync.get(null, listHistory => {
+        const modalContainer = document.querySelector('#jobdoge-modal-container')
+        // Clear children
+        while (modalContainer.firstChild) {
+          modalContainer.removeChild(modalContainer.firstChild);
+        }
+
+        let jobPostArr = []
+        for (let key in listHistory) {
+          jobPostArr.push({key, data: listHistory[key]})
+        }
+        jobPostArr
+          .sort((a, b) => a.data.date > b.data.date)
+          .forEach(jobObj => {
+            let { key, data } = jobObj
+            modalContainer.prepend(buildRow(key, data))
+          })
+        console.log('jobPostArr', jobPostArr)
+      })
+    }
+  })
 })
 

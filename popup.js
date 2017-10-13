@@ -49,8 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let viewHidden = document.querySelector('#view-hidden')
     viewHidden.onclick = function() {
-      console.log('hidden clicked')
-      console.log('tab', tab)
       chrome.tabs.sendMessage(tab.id, {
         text: 'open_modal',
       }, () => {
@@ -58,5 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     }
   });
-});
-
+})
