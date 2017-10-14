@@ -110,6 +110,30 @@ const updatePosts = () => {
   }
 }
 
+const addListHeaders = () => {
+  let headerDiv = document.createElement('div')
+  let dateHeader = document.createElement('p')
+  let jobHeader = document.createElement('p')
+  let companyHeader = document.createElement('p')
+  let unhideHeader = document.createElement('p')
+  dateHeader.innerHTML = 'Hide Date'
+  jobHeader.innerHTML = 'Job Name'
+  companyHeader.innerHTML = 'Company'
+  unhideHeader.innerHTML = 'Unhide Post'
+  dateHeader.classList.add('jobdoge-row-date', 'jobdoge-row-header')
+  jobHeader.classList.add('jobdoge-row-job', 'jobdoge-row-header')
+  companyHeader.classList.add('jobdoge-row-company', 'jobdoge-row-header')
+  unhideHeader.classList.add('jobdoge-row-unhide', 'jobdoge-row-header')
+  headerDiv.classList.add('jobdoge-row')
+  headerDiv.append(dateHeader)
+  headerDiv.append(companyHeader)
+  headerDiv.append(jobHeader)
+  headerDiv.append(unhideHeader)
+  headerDiv.style.display = 'flex'
+  headerDiv.style.justifyContent = 'flex'
+  return headerDiv
+}
+
 const buildModal = () => {
   // Set up modal
   const modal = document.createElement('div')
@@ -137,8 +161,15 @@ const buildModal = () => {
   container.setAttribute('id', 'jobdoge-modal-container')
   modalContent.prepend(container)
 
+  // Set up container in modal content for headers
+  const headerContainer = document.createElement('div')
+  headerContainer.setAttribute('id', 'jobdoge-modal-container-header')
+  headerContainer.classList.add('jobdoge-row')
+  headerContainer.prepend(addListHeaders())
+  modalContent.prepend(headerContainer)
+
   // Add modal content to modal
-  modal.prepend(modalContent)
+  modal.append(modalContent)
 
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
@@ -163,18 +194,22 @@ const buildRow = (url, post) => {
   let dateCol = document.createElement('p')
   let dateStr = new Date(post.date).toString().slice(4, 15)
   dateCol.innerHTML = dateStr
+  dateCol.classList.add('jobdoge-row-date')
 
   // Create job name column
   let jobCol = document.createElement('a')
   jobCol.target = '_blank'
   jobCol.innerHTML = jobTitle
   jobCol.href = url
+  jobCol.classList.add('jobdoge-row-job')
 
   // Create company name column
   let compCol = document.createElement('p')
   compCol.innerHTML = company
+  compCol.classList.add('jobdoge-row-company')
 
   // Create unhide button
+  let buttonDiv = document.createElement('div')
   let unhideButton = document.createElement('button')
   unhideButton.innerHTML = 'Unhide'
   unhideButton.onclick = function() {
@@ -185,12 +220,14 @@ const buildRow = (url, post) => {
       else row.remove()
     })
   }
+  buttonDiv.classList.add('jobdoge-row-unhide')
+  buttonDiv.append(unhideButton)
 
   // Add elements to row div
   row.append(dateCol)
   row.append(compCol)
   row.append(jobCol)
-  row.append(unhideButton)
+  row.append(buttonDiv)
 
   return row
 }
@@ -232,10 +269,10 @@ window.addEventListener('load', function load() {
           jobPostArr.push({key, data: listHistory[key]})
         }
         jobPostArr
-          .sort((a, b) => a.data.date > b.data.date)
+          .sort((a, b) => b.data.date - a.data.date)
           .forEach(jobObj => {
             let { key, data } = jobObj
-            modalContainer.prepend(buildRow(key, data))
+            modalContainer.append(buildRow(key, data))
           })
         console.log('jobPostArr', jobPostArr)
       })
