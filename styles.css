@@ -62,7 +62,7 @@
   padding: 20px;
   padding-top: 35px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 750px; /* Could be more or less, depending on screen size */
   transition: all 1s;
   animation-delay: 1s
 }
@@ -94,14 +94,42 @@
   cursor: pointer;
 }
 
-.jobdoge-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 #jobdoge-modal-container {
   height: 80vh;
   overflow: auto;
   padding: 0 20px;
+}
+
+#jobdoge-modal-container-header {
+  padding: 0 20px;
+}
+
+.jobdoge-row {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  text-align: center;
+}
+
+.jobdoge-row-date {
+  flex: 1;
+}
+
+.jobdoge-row-job {
+  flex: 4;
+}
+
+.jobdoge-row-company {
+  flex: 1.5;
+}
+
+.jobdoge-row-unhide {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.jobdoge-row-header {
+  font-weight: bold;
+  text-align: center;
 }
