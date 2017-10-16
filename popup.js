@@ -75,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chrome.storage.sync.get(null, (items) => {
       console.log('items from storage', items)
+      console.log('stringify', JSON.stringify(items))
       console.log('keys from storage', Object.keys(items))
       const hiddenCount = document.querySelector('#hidden-info')
       hiddenCount.innerHTML = `Hidden posts: ${Object.keys(items).length}`
@@ -87,6 +88,30 @@ document.addEventListener('DOMContentLoaded', () => {
         text: 'open_modal',
       }, () => {
         window.close()
+      })
+    }
+
+    hidePost.onclick = function() {
+      chrome.tabs.sendMessage(tab.id, {
+        text: 'hide_post',
+        href: url,
+      }, function() {
+        unhidePost.style.display = 'block'
+        hidePost.style.display = 'none'
+        postStatusDescriptor.innerHTML = 'You are currently hiding this job post.'
+        postStatusDescriptor.style.color = 'rgb(224, 13, 15)'
+      })
+    }
+
+    unhidePost.onclick = function() {
+      chrome.tabs.sendMessage(tab.id, {
+        text: 'unhide_post',
+        href: url,
+      }, function() {
+        hidePost.style.display = 'block'
+        unhidePost.style.display = 'none'
+        postStatusDescriptor.innerHTML = 'This job post is currently unhidden.'
+        postStatusDescriptor.style.color = '#099409'
       })
     }
   });

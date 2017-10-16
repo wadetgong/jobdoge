@@ -239,6 +239,26 @@ window.addEventListener('load', function load() {
         sendResponse(Object.keys(hideStatus).length > 0)
       })
     }
+    if (text === 'hide_post') {
+      let jobTitle = document.querySelector('.nj-job-title')
+        .innerHTML
+        .trim()
+      let company = document.querySelector('.nc-fallback-title a')
+        .innerHTML
+        .trim()
+      let date = Date.now()
+      let data = {}
+      data[href] = {jobTitle, company, host, date}
+      chrome.storage.sync.set(data, () => {
+        sendResponse()
+      });
+    }
+
+    if (text === 'unhide_post') {
+      chrome.storage.sync.remove(href, () => {
+        sendResponse()
+      })
+    }
 
     return true
   })
