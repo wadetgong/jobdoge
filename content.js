@@ -232,6 +232,7 @@ window.addEventListener('load', function load() {
             let { key, data } = jobObj
             modalContainer.append(buildRow(key, data))
           })
+        sendResponse()
       })
     }
     if (text === 'hide_status') {
