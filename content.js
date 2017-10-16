@@ -1,53 +1,11 @@
 /* global chrome */
 
+// Key: site host, Value: valid single job post pathnames
 const supportedSites = {
-  'www.builtinchicago.org': true,
+  'www.builtinchicago.org': ['/job/*'],
   'www.builtinnyc.com': true,
   'www.builtinla.com': true,
   'www.builtincolorado.com': true,
-}
-
-const chooseRandom = arr => {
-  const randomIndex = Math.floor(Math.random() * arr.length)
-  return arr[randomIndex]
-}
-
-const getMessage = () => {
-  const messages = [
-    'Much goodbye',
-    'No thank u',
-    'Next pls',
-    'Wow',
-    'No like',
-    'Much next',
-  ]
-  return chooseRandom(messages)
-}
-
-const getRandomInRange = (min, max) => {
-  return Math.round((Math.random() * (max - min) + min) * 100)
-}
-
-const getRandomColor = () => {
-  const colors = [
-    '#0500fe',
-    '#ff00fe',
-    '#fe0400',
-    '#fe7e00',
-    '#0f0',
-  ]
-  return chooseRandom(colors)
-}
-
-const getDogeMessage = () => {
-  let message = document.createElement('p')
-  message.style.left = `${getRandomInRange(0.1, 0.6)}%`
-  message.style.top = `${getRandomInRange(0.0, 0.45)}%`
-  message.style.color = getRandomColor()
-  message.style.transform = `translateY(0em) rotate(${getRandomInRange(-0.12, 0.12)}deg)`
-  message.innerHTML = getMessage()
-  message.classList.add('doge-msg')
-  return message
 }
 
 const traversePosts = (domElements, hiddenPosts) => {
@@ -251,7 +209,7 @@ window.addEventListener('load', function load() {
 
   // Add listener to listen for messages from popup
   chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    const { text } = msg
+    const { text, href } = msg
     if (text === 'open_modal') {
       modal.classList.add('jobdoge-modal-open')
       modal.classList.remove('jobdoge-modal-closed')
@@ -274,9 +232,15 @@ window.addEventListener('load', function load() {
             let { key, data } = jobObj
             modalContainer.append(buildRow(key, data))
           })
-        console.log('jobPostArr', jobPostArr)
       })
     }
+    if (text === 'hide_status') {
+      chrome.storage.sync.get(href, hideStatus => {
+        sendResponse(Object.keys(hideStatus).length > 0)
+      })
+    }
+
+    return true
   })
 })
 

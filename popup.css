@@ -17,7 +17,7 @@ a, button {
 .column-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .container {
@@ -37,9 +37,21 @@ a, button {
 
 #view-hidden {
   margin: 0 10%;
+  font-size: 12px;
+  text-align: center;
 }
 
 #doge-pic {
   margin: 5px;
   height: 19px;
+}
+
+#hide-post {
+  margin-top: 5px;
+  margin: 0 10px;
+}
+
+#post-status-descriptor {
+  margin: 5px 0;
+  text-align: center;
 }
