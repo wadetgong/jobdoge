@@ -46,5 +46,8 @@ const builtInModule = {
   },
   getRows: () => {
     return document.querySelectorAll('.results.jobs .views-row')
+  },
+  getJobContainers: () => {
+    return [document.querySelector('#content-area')]
   }
 }

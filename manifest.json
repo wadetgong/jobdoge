@@ -25,7 +25,13 @@
         "https://*/*"
       ],
       "css": ["styles.css"],
-      "js": ["utils.js", "jobhosts/builtin.js", "modal.js", "content.js"],
+      "js": [
+        "utils.js",
+        "jobhosts/builtin.js",
+        "jobhosts/linkedin.js",
+        "modal.js",
+        "content.js"
+      ],
       "run_at": "document_start"
     }
   ]

@@ -1,4 +1,4 @@
-/* global chrome builtInModule modalModule */
+/* global chrome builtInModule modalModule linkedinModule */
 
 // Key: site host, Value: valid single job post pathnames
 const supportedSites = {
@@ -6,6 +6,7 @@ const supportedSites = {
   'www.builtinnyc.com': builtInModule,
   'www.builtinla.com': builtInModule,
   'www.builtincolorado.com': builtInModule,
+  'www.linkedin.com': linkedinModule,
 }
 const { host } = window.location
 
@@ -26,17 +27,35 @@ const updatePosts = () => {
     })
   }
 }
+const debouncedUpdatePosts = debounce(updatePosts, 250)
+
+
+let currentLocation = window.location.href
+
+const handleDOMChange = () => {
+  let newLocation = window.location.href
+  console.log('handleDOMChange')
+
+  currentLocation = newLocation
+  if (supportedSites[host]) {
+    const contentContainers = supportedSites[host].getJobContainers()
+
+    contentContainers.forEach(container => container
+      .addEventListener('DOMSubtreeModified', function() {
+        debouncedUpdatePosts()
+      })
+    )
+  }
+}
+const debouncedHandleDOMChange = debounce(handleDOMChange, 250)
 
 window.addEventListener('load', function load() {
   window.removeEventListener('load', load, false)
-  updatePosts()
+  debouncedUpdatePosts()
 
-  if (supportedSites[host]) {
-    const content = document.querySelector('#content-area')
-    content.addEventListener('DOMSubtreeModified', function() {
-      updatePosts()
-    })
-  }
+  document
+    .querySelector('body')
+    .addEventListener('DOMSubtreeModified', debouncedHandleDOMChange)
 
   // Build modal and attach to DOM
   const modal = modalModule.buildModal()
