@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
 
-    } else if (rootUrl && rootUrl !== 'newtab') {
+    } else {
       supportInfo.innerHTML = `${rootUrl} is not supported by JobDoge yet.`
       supportInfo.style.color = 'rgb(224, 13, 15)'
       requestSupport.style.display = 'block'

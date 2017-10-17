@@ -1,67 +1,26 @@
-/* global chrome */
+/* global chrome builtInModule */
 
 // Key: site host, Value: valid single job post pathnames
 const supportedSites = {
-  'www.builtinchicago.org': ['/job/*'],
-  'www.builtinnyc.com': true,
-  'www.builtinla.com': true,
-  'www.builtincolorado.com': true,
+  'www.builtinchicago.org': builtInModule,
+  'www.builtinnyc.com': builtInModule,
+  'www.builtinla.com': builtInModule,
+  'www.builtincolorado.com': builtInModule,
 }
+const { host } = window.location
 
 const traversePosts = (domElements, hiddenPosts) => {
   for (let i = 0; i < domElements.length; i++) {
     let currentElem = domElements[i]
-
-    if (!currentElem.querySelector('.jobdoge-remove')) {
-      // Set id for CSS transition
-      currentElem.setAttribute('id', 'jobdoge-post')
-
-      // Get relevant data
-      let jobInfo = currentElem.querySelector('.job-title a')
-      let hrefString = jobInfo.href
-      let jobTitle = jobInfo.text
-      let host = jobInfo.hostname
-      let companyInfo = currentElem.querySelector('.job-company a')
-      let company = companyInfo
-        ? companyInfo.text
-        : currentElem.querySelector('.job-company').innerHTML
-
-      if (hiddenPosts[hrefString]) {
-        // If job post matches a hidden post, hide the post
-        currentElem.setAttribute('id', 'jobdoge-hidden-post')
-      } else {
-
-        // Set up doge message
-        let dogeMsg = getDogeMessage()
-        currentElem.prepend(dogeMsg)
-
-        // Set up button
-        var button = document.createElement('Button')
-        button.innerHTML = 'Hide'
-        button.classList.add('jobdoge-remove')
-        button.addEventListener('click', function() {
-          // Update CSS to enable transition
-          currentElem.setAttribute('id', 'jobdoge-hidden-post')
-          dogeMsg.classList.add('doge-msg-hidden')
-
-          // Save relevant data to storage
-          let data = {}
-          let date = Date.now()
-          data[hrefString] = {jobTitle, company, host, date}
-          chrome.storage.sync.set(data);
-        });
-        currentElem.prepend(button)
-      }
-    }
+    supportedSites[host].processPost(currentElem, hiddenPosts)
   }
 }
 
 const updatePosts = () => {
-  const { host } = window.location
   if (supportedSites[host]) {
     chrome.storage.sync.get(null, listHistory => {
       traversePosts(
-        document.querySelectorAll('.results.jobs .views-row'),
+        supportedSites[host].getRows(),
         listHistory
       )
     })
@@ -194,7 +153,6 @@ window.addEventListener('load', function load() {
   window.removeEventListener('load', load, false)
   updatePosts()
 
-  const { host } = window.location
   if (supportedSites[host]) {
     const content = document.querySelector('#content-area')
     content.addEventListener('DOMSubtreeModified', function() {
