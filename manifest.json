@@ -25,7 +25,11 @@
         "https://*/*"
       ],
       "css": ["styles.css"],
+<<<<<<< Updated upstream
       "js": ["utils.js", "content.js"],
+=======
+      "js": ["utils.js", "jobhosts/builtin.js", "modal.js", "content.js"],
+>>>>>>> Stashed changes
       "run_at": "document_start"
     }
   ]
