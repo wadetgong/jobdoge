@@ -49,6 +49,8 @@ const handleDOMChange = () => {
   if (supportedSites[host]) {
     let newContainers = supportedSites[host].getJobContainers()
 
+    console.log('containersShouldUpdate', containersShouldUpdate(currentContainers, newContainers))
+
     if (containersShouldUpdate(currentContainers, newContainers)) {
       currentContainers = newContainers
       debouncedUpdatePosts()
