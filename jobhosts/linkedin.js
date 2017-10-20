@@ -43,7 +43,9 @@ const linkedinModule = {
     return { hrefString, jobTitle, host, company}
   },
   processPost: (element, hiddenPosts) => {
-    if (!element.querySelector('.jobdoge-remove')) {
+    // Only run logic in block if we haven't 'processed' the element
+    if (!element.querySelector('.jobdoge-remove')
+      && !(element.getAttribute('id') === 'jobdoge-hidden-post')) {
       // Guard condition to ensure that relevant data has successfuly loaded for a given job post element
       if (!element.children.length) return
 
@@ -80,7 +82,9 @@ const linkedinModule = {
         button.style.right = '16px'
         button.addEventListener('click', function() {
           // Needed for job card formatting on /jobs/
-          setTimeout(() => {element.style.display = 'none'}, 1000)
+          if (window.location.pathname === '/jobs/') {
+            setTimeout(() => {element.style.display = 'none'}, 1000)
+          }
 
           // Update CSS to enable transition
           element.setAttribute('id', 'jobdoge-hidden-post')
@@ -95,9 +99,6 @@ const linkedinModule = {
         });
 
         element.style.position = 'relative'
-
-
-
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')
       }
