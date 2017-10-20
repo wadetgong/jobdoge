@@ -61,7 +61,16 @@ const linkedinModule = {
       if (hiddenPosts[hrefString]) {
         // If job post matches a hidden post, hide the post
         element.setAttribute('id', 'jobdoge-hidden-post')
+        // Needed for job card formatting on /jobs/
+        if (window.location.pathname === '/jobs/') {
+          element.style.display = 'none'
+        }
+
       } else {
+
+        // Set up doge image
+        let dogePic = document.createElement('img')
+        dogePic.setAttribute('src', 'doge.png');
 
         // Set up doge message
         let dogeMsg
@@ -98,6 +107,7 @@ const linkedinModule = {
           chrome.storage.sync.set(data);
         });
 
+        button.prepend(dogePic)
         element.style.position = 'relative'
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')
