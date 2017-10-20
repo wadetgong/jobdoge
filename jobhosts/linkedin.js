@@ -1,18 +1,95 @@
-/* global chrome */
+/* global chrome getDogeMessage */
 
 const linkedinModule = {
+  // Depending on the pathname, retrieving the relevant Linkedin data is different
+  getDataFromElement: (element) => {
+    let hrefString, jobTitle
+    if (window.location.pathname === '/jobs/') {
+      hrefString = element
+        .querySelector('a')
+        .href
+        .split('?')[0]
+      jobTitle = element
+        .querySelector('.job-card__title-line')
+        .innerText
+        .trim()
+        .replace('\n', ' ')
+    } else {
+      hrefString = element
+        .querySelector('.job-card-search__upper-content-wrapper-left a')
+        .href
+        .split('?')[0]
+      jobTitle = element
+        .querySelector('.job-card-search__title')
+        .innerText
+        .trim()
+    }
+    let host = window.location.host
+    let company = element
+      .querySelector('.job-card__company-name')
+      .innerText
+
+    return { hrefString, jobTitle, host, company}
+  },
   processPost: (element, hiddenPosts) => {
     if (!element.querySelector('.jobdoge-remove')) {
-      // Set up button
-      var button = document.createElement('Button')
-      button.innerHTML = 'Hide'
-      button.classList.add('jobdoge-remove')
-      button.style.bottom = '16px'
-      button.style.right = '16px'
+      // Guard condition to ensure that relevant data has successfuly loaded for a given job post element
+      if (!element.children.length) return
 
-      element.style.position = 'relative'
-      element.prepend(button)
-      button.classList.add('jobdoge-fadeIn')
+      // height: 100% property in #jobdoge-post id changes card height on /jobs/
+      let origElementHeight = element.clientHeight
+
+      // Set id for CSS transition
+      element.setAttribute('id', 'jobdoge-post')
+
+      // Get relevant data
+      let { hrefString, jobTitle, host, company} = linkedinModule.getDataFromElement(element)
+
+      if (hiddenPosts[hrefString]) {
+        // If job post matches a hidden post, hide the post
+        element.setAttribute('id', 'jobdoge-hidden-post')
+      } else {
+
+        // Set up doge message
+        let dogeMsg
+        if (window.location.pathname === '/jobs/') {
+          dogeMsg = getDogeMessage(0.04, 0.16, 0.1, 0.6)
+          dogeMsg.style.fontSize = '30px'
+          element.style.height = `${origElementHeight}px`
+        } else {
+          dogeMsg = getDogeMessage(0.14, 0.58, 0.3, 0.6)
+        }
+        element.prepend(dogeMsg)
+
+        // Set up button
+        var button = document.createElement('Button')
+        button.innerHTML = 'Hide'
+        button.classList.add('jobdoge-remove')
+        button.style.bottom = '16px'
+        button.style.right = '16px'
+        button.addEventListener('click', function() {
+          // Needed for job card formatting on /jobs/
+          setTimeout(() => {element.style.display = 'none'}, 1000)
+
+          // Update CSS to enable transition
+          element.setAttribute('id', 'jobdoge-hidden-post')
+          dogeMsg.classList.add('doge-msg-show')
+
+          // Save relevant data to storage
+          let data = {}
+          let date = Date.now()
+          data[hrefString] = {jobTitle, company, host, date}
+
+          // chrome.storage.sync.set(data);
+        });
+
+        element.style.position = 'relative'
+
+
+
+        element.prepend(button)
+        button.classList.add('jobdoge-fadeIn')
+      }
     }
   },
   getRows: () => {

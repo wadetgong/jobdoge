@@ -1,7 +1,7 @@
 #jobdoge-post {
   opacity: 1;
-  height: 100%;
   position: relative;
+  height: 100%;
 }
 
 #jobdoge-hidden-post {
@@ -29,7 +29,6 @@
 }
 
 .jobdoge-remove:hover {
-  /*opacity: 0.6;*/
   background-color: rgba(128, 128, 128, 0.6);
 }
 
@@ -42,7 +41,7 @@
   transition: transform 1s
 }
 
-.doge-msg-hidden {
+.doge-msg-show {
   visibility: visible;
   transform: translateY(-1em) !important;
 }

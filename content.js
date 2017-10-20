@@ -46,7 +46,6 @@ const containersShouldUpdate = (oldContainers, newContainers) => {
 
 let currentContainers = supportedSites[host] && supportedSites[host].getJobContainers()
 const handleDOMChange = () => {
-  console.log('handleDOMChange')
   if (supportedSites[host]) {
     let newContainers = supportedSites[host].getJobContainers()
 
