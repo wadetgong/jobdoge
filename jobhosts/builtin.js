@@ -16,13 +16,14 @@ const builtInModule = {
         ? companyInfo.text
         : element.querySelector('.job-company').innerHTML
 
+      // Hide or add button
       if (hiddenPosts[hrefString]) {
         // If job post matches a hidden post, hide the post
         element.setAttribute('id', 'jobdoge-hidden-post')
       } else {
 
         // Set up doge message
-        let dogeMsg = getDogeMessage()
+        let dogeMsg = getDogeMessage(0.1, 0.6, 0.0, 0.45)
         element.prepend(dogeMsg)
 
         // Set up button
@@ -32,7 +33,7 @@ const builtInModule = {
         button.addEventListener('click', function() {
           // Update CSS to enable transition
           element.setAttribute('id', 'jobdoge-hidden-post')
-          dogeMsg.classList.add('doge-msg-hidden')
+          dogeMsg.classList.add('doge-msg-show')
 
           // Save relevant data to storage
           let data = {}

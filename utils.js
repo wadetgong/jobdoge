@@ -30,10 +30,10 @@ const getRandomColor = () => {
   return chooseRandom(colors)
 }
 
-const getDogeMessage = () => {
+const getDogeMessage = (horizMin, horizMax, vertMin, vertMax) => {
   let message = document.createElement('p')
-  message.style.left = `${getRandomInRange(0.1, 0.6)}%`
-  message.style.top = `${getRandomInRange(0.0, 0.45)}%`
+  message.style.left = `${getRandomInRange(horizMin, horizMax)}%`
+  message.style.top = `${getRandomInRange(vertMin, vertMax)}%`
   message.style.color = getRandomColor()
   message.style.transform = `translateY(0em) rotate(${getRandomInRange(-0.12, 0.12)}deg)`
   message.innerHTML = getMessage()
