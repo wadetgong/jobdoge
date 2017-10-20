@@ -23,10 +23,14 @@
   padding: 5px 20px;
   background-color: gray;
   color: white;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 2s;
 }
 
 .jobdoge-remove:hover {
-  opacity: 0.6;
+  /*opacity: 0.6;*/
+  background-color: rgba(128, 128, 128, 0.6);
 }
 
 .doge-msg {
@@ -137,4 +141,17 @@
 .jobdoge-row-header {
   font-weight: bold;
   text-align: center;
+}
+
+.jobdoge-fadeIn {
+  animation: jobdoge-fadeIn .5s ease-in 1 forwards;
+  -webkit-animation: jobdoge-fadeIn .5s ease-in 1 forwards;
+}
+
+@keyframes jobdoge-fadeIn {
+  to {opacity: 1;}
+}
+
+@-webkit-keyframes jobdoge-fadeIn {
+  to {opacity: 1;}
 }

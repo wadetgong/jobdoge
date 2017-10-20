@@ -41,13 +41,15 @@ const builtInModule = {
           chrome.storage.sync.set(data);
         });
         element.prepend(button)
+        button.classList.add('jobdoge-fadeIn')
       }
     }
   },
   getRows: () => {
-    return document.querySelectorAll('.results.jobs .views-row')
+    return [...document.querySelectorAll('.results.jobs .views-row')]
   },
   getJobContainers: () => {
     return [document.querySelector('#content-area')]
+      .filter(container => container) // filter out falsey values
   }
 }

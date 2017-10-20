@@ -1,4 +1,4 @@
-/* global chrome builtInModule modalModule linkedinModule */
+/* global chrome builtInModule modalModule linkedinModule debounce*/
 
 // Key: site host, Value: valid single job post pathnames
 const supportedSites = {
@@ -27,27 +27,42 @@ const updatePosts = () => {
     })
   }
 }
-const debouncedUpdatePosts = debounce(updatePosts, 250)
+const debouncedUpdatePosts = debounce(updatePosts, 500)
 
+const containersShouldUpdate = (oldContainers, newContainers) => {
+  if (currentContainers.length !== newContainers.length) return true
 
-let currentLocation = window.location.href
+  let containerHash = {}
+  for (let i = 0; i < currentContainers.length; i++) {
+    containerHash[[...currentContainers[i].classList].join('')] = true
+  }
 
+  for (let i = 0; i < newContainers.length; i++) {
+    if (!containerHash[[...newContainers[i].classList].join('')]) return true
+  }
+
+  return false
+}
+
+let currentContainers = supportedSites[host] && supportedSites[host].getJobContainers()
 const handleDOMChange = () => {
-  let newLocation = window.location.href
   console.log('handleDOMChange')
-
-  currentLocation = newLocation
   if (supportedSites[host]) {
-    const contentContainers = supportedSites[host].getJobContainers()
+    let newContainers = supportedSites[host].getJobContainers()
 
-    contentContainers.forEach(container => container
-      .addEventListener('DOMSubtreeModified', function() {
-        debouncedUpdatePosts()
-      })
-    )
+    if (containersShouldUpdate(currentContainers, newContainers)) {
+      currentContainers = newContainers
+      debouncedUpdatePosts()
+
+      currentContainers.forEach(container => container
+        .addEventListener('DOMSubtreeModified', function() {
+          debouncedUpdatePosts()
+        })
+      )
+    }
   }
 }
-const debouncedHandleDOMChange = debounce(handleDOMChange, 250)
+const debouncedHandleDOMChange = debounce(handleDOMChange, 500)
 
 window.addEventListener('load', function load() {
   window.removeEventListener('load', load, false)
