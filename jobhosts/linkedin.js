@@ -1,4 +1,4 @@
-/* global chrome getDogeMessage */
+/* global chrome getDogeMessage getDogeImage*/
 
 const linkedinModule = {
   getSinglePostInfo: () => {
@@ -69,8 +69,7 @@ const linkedinModule = {
       } else {
 
         // Set up doge image
-        let dogePic = document.createElement('img')
-        dogePic.setAttribute('src', 'doge.png');
+        let dogePic = getDogeImage(0.16, 0.52, 0.16, 0.16)
 
         // Set up doge message
         let dogeMsg
@@ -111,6 +110,8 @@ const linkedinModule = {
         element.style.position = 'relative'
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')
+        // Timeout set so fade in of element doesn't show doge image in background
+        setTimeout(() => { element.append(dogePic) }, 1000)
       }
     }
   },

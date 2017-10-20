@@ -31,6 +31,9 @@ const builtInModule = {
         element.setAttribute('id', 'jobdoge-hidden-post')
       } else {
 
+        // Set up doge image
+        let dogePic = getDogeImage(0.16, 0.52)
+
         // Set up doge message
         let dogeMsg = getDogeMessage(0.1, 0.6, 0.0, 0.45)
         element.prepend(dogeMsg)
@@ -52,6 +55,10 @@ const builtInModule = {
         });
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')
+        // Timeout set so fade in of element doesn't show doge image in background
+        setTimeout(() => {
+          element.insertBefore(dogePic, element.children[1])
+        }, 1000)
       }
     }
   },

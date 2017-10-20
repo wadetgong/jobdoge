@@ -24,12 +24,17 @@
   background-color: gray;
   color: white;
   z-index: 2;
+  height: 26px;
   opacity: 0;
   transition: opacity 2s;
 }
 
 .jobdoge-remove:hover {
   background-color: #DFDFDF;
+}
+
+.jobdoge-remove:hover ~ .jobdoge-image {
+  transform: translateY(-22px);
 }
 
 .doge-msg {
@@ -145,6 +150,15 @@
 .jobdoge-fadeIn {
   animation: jobdoge-fadeIn .5s ease-in 1 forwards;
   -webkit-animation: jobdoge-fadeIn .5s ease-in 1 forwards;
+}
+
+.jobdoge-image {
+  transform: translateY(0);
+  transition: all 2s;
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABHNCSVQICAgIfAhkiAAABS5JREFUSInt0luIXVcdx/Hvuuy99t5nn3PmnLlmMpmksRUTZ9KJD4KjoDaGQhV8qErFPlhUCkUQfBD0waJIHyQF8+pDUETxQYWW2oJQoxhNafCCWpO2aTM6l5PJJGfmXPb9snwQoe0UE1/F39N/wVp8+K214P95Sy6e+8wPnj9z+ku32yffuDj7uZNf+cnjH4x+9f2Hn7wT5PL5xx8Kq9HDjcB8/r+CAsMXjAkD45gv//Lcp5+/3eF4/dUzg90BStrqjqEzj37g+IHZ7t17g5LNq9uIjPue+84nXgK7v8mPHnzw6lOPXJrw7cHZxTlch+J2kHjD3Hn6m/f1X+tZbt4sOLncQVmYnPLzhor/Nr0wLR3X84uiOGTIvDguqLRDo9WiqvXWwumzB++oEbDrGZM2u22uDku08XBcQW994E4emFqplHsiLrkntY7XT2pGw5TxaMy4djFTi/O9333rz3cK4bSavXccDmgGhmd+u4UQkvesHiJVhriQjEtNZFtk7hxVZ4ZknCLrCuG1aYTh8vULX7PXL3zjq7eFbFHnN9Z7fPy9LT5yb8CxpUlK5YLQpElGmpQ02l3ac3dhgg6V9hjc6hPt7dLbzUltg6AZPLFx4euP/kdIZP27nSLlYLfiw6eOo/0O1kryLEXYmpkpH6MqrBWEE7N47Q5WSLLBBi/86XUeeOynPHV+jc6hE2ffCul/D/1nP/X+iy9uKhMoJg/PE5eKoq4RUoLUKFHxs19vEVUFh+d3WV7UtDpTeJ6HryqOdCJ8EdMbaoLOAZOMLz/kh8d+vK9RP8kWJic1R+5qk9SCoioRtsT1fHzf59qtinNPr3Hx9y/zykbNc8++SJ3uEfghwmmyfHSOH377k5xa9ri5dokyHT/yto2i3P1sdyrE+m1UMI/2p0CAckIcV7PS7fNEeIQ//HWL2XbN8aV3olxDVZcY16cUDh1fsuB7qKADmg+9LWSarUqJAB0uQHMeiU+URrSaDaQTIKIByws5x2ZbaNNEyCZKKqzTIDNdrvxjk99cukZe1kxOz/HFx5bcjcvPfHTh2Md+/ibIUQpQoENqNMY3tBsBygmxZULudhHtkLavsTWkyQBFgdOYIRETPPnd7/GXK9coKthYe53Tp1Y5utBdBd4MFRaqaABsI3JFUaQYbXCcnExpXONinAnSSlDZBClTiqoiGlUM85JDC3O8em0dX0qWlt7F2t97TLQbnX1XVycJRS6w0RDfn6ZIE7I6wvczcAK0FxCNd6msRGhFbRV5HCOMRxzDyr3vZrO3w/b2DjNTbW5c36A3Kaf3QXEc43kBWV1hhcL4LbRSROMBqoY0jpDUWCGglkSDPmEAye42ojJEw1soUf/rTaVkui1oNdRL+yCpJGVRUgmJokRLiaMMYdghSoe4rqHKM8hySmr++PIW65sDZmc6WCznL7zCjZt9pJAsToesLB2l22n8Yh802o0JPBdlXNK9dawtyd1JSgRKeVR1DVKBzfE8h9WVo1wJXuNGf8z1nYT3nVwkTmapizH3379Kw3UpRuX+753lOa6t0UqR7u0gEKjQov1JfC8kSkdUeYqgIE8TtDKcWLqHLIkorEUJSVFWONol7LTJqpzRaGT3QY0wUFmUkN/q056bQlKjsFAXZOkegR8gfI94PMQmQ/Iix6HCNRpdg+dptHZAukgtMRoyU6l9UNhtvrBXWvRwXBVphtPSZFmEqAVWW6zQOE6Acn3KdIhQJUVRIJVPXeW4tSTLY6TIcWXAeGdk3Gy4x/9s/gmohDVDjPy1ZgAAAABJRU5ErkJggg==)
 }
 
 @keyframes jobdoge-fadeIn {
