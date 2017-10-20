@@ -1,7 +1,16 @@
 /* global chrome getDogeMessage */
 
 const builtInModule = {
- processPost: (element, hiddenPosts) => {
+  getSinglePostInfo: () => {
+    let jobTitle = document.querySelector('.nj-job-title')
+      .innerHTML
+      .trim()
+    let company = document.querySelector('.nc-fallback-title a')
+      .innerHTML
+      .trim()
+    return { jobTitle, company }
+  },
+  processPost: (element, hiddenPosts) => {
     if (!element.querySelector('.jobdoge-remove')) {
       // Set id for CSS transition
       element.setAttribute('id', 'jobdoge-post')

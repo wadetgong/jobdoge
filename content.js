@@ -110,12 +110,7 @@ window.addEventListener('load', function load() {
       })
     }
     if (text === 'hide_post') {
-      let jobTitle = document.querySelector('.nj-job-title')
-        .innerHTML
-        .trim()
-      let company = document.querySelector('.nc-fallback-title a')
-        .innerHTML
-        .trim()
+      let { jobTitle, company } = supportedSites[host].getSinglePostInfo()
       let date = Date.now()
       let data = {}
       data[href] = {jobTitle, company, host, date}
