@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         })
       } else {
+        hideButtonContainer.style.display = 'none'
         hidePost.style.display = 'none'
         unhidePost.style.display = 'none'
         postStatusDescriptor.style.display = 'none'
