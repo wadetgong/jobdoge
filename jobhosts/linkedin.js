@@ -1,6 +1,17 @@
 /* global chrome getDogeMessage */
 
 const linkedinModule = {
+  getSinglePostInfo: () => {
+    let jobTitle = document
+      .querySelector('.jobs-details-top-card__job-title')
+      .innerText
+      .trim()
+    let company = document
+      .querySelector('.jobs-details-top-card__company-info a')
+      .innerText
+      .trim()
+    return { jobTitle, company }
+  },
   // Depending on the pathname, retrieving the relevant Linkedin data is different
   getDataFromElement: (element) => {
     let hrefString, jobTitle
@@ -80,7 +91,7 @@ const linkedinModule = {
           let date = Date.now()
           data[hrefString] = {jobTitle, company, host, date}
 
-          // chrome.storage.sync.set(data);
+          chrome.storage.sync.set(data);
         });
 
         element.style.position = 'relative'

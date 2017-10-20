@@ -5,6 +5,7 @@ const supportedSites = {
   'www.builtinnyc.com': [/job\/.[^\s\\]*/g],
   'www.builtinla.com': [/job\/.[^\s\\]*/g],
   'www.builtincolorado.com': [/job\/.[^\s\\]*/g],
+  'www.linkedin.com': [/jobs\/view\/.[^\s\\]*/g],
 }
 
 function getCurrentTabUrl(callback) {
