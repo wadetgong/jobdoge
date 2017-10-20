@@ -41,6 +41,13 @@ const getDogeMessage = (horizMin, horizMax, vertMin, vertMax) => {
   return message
 }
 
+const getDogeImage = (horizMin, horizMax, vertMin, vertMax) => {
+  let dogePic = document.createElement('div')
+  dogePic.classList.add('jobdoge-image')
+  if (vertMin) dogePic.style.bottom = `${getRandomInRange(vertMin, vertMax)}px`
+  if (horizMin) dogePic.style.right = `${getRandomInRange(horizMin, horizMax)}px`
+  return dogePic
+}
 // Returns a function, that, as long as it continues to be invoked, will not
 // be triggered. The function will be called after it stops being called for
 // N milliseconds. If `immediate` is passed, trigger the function on the

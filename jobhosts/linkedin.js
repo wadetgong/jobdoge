@@ -1,4 +1,4 @@
-/* global chrome getDogeMessage */
+/* global chrome getDogeMessage getDogeImage*/
 
 const linkedinModule = {
   getSinglePostInfo: () => {
@@ -63,6 +63,9 @@ const linkedinModule = {
         element.setAttribute('id', 'jobdoge-hidden-post')
       } else {
 
+        // Set up doge image
+        let dogePic = getDogeImage(0.16, 0.52, 0.16, 0.16)
+
         // Set up doge message
         let dogeMsg
         if (window.location.pathname === '/jobs/') {
@@ -101,6 +104,8 @@ const linkedinModule = {
         element.style.position = 'relative'
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')
+        // Timeout set so fade in of element doesn't show doge image in background
+        setTimeout(() => { element.append(dogePic) }, 1000)
       }
     }
   },
