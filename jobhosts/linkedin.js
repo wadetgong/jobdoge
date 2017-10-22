@@ -106,7 +106,6 @@ const linkedinModule = {
           chrome.storage.sync.set(data);
         });
 
-        button.prepend(dogePic)
         element.style.position = 'relative'
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')
