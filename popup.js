@@ -25,6 +25,13 @@ function getCurrentTabUrl(callback) {
 
 document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url, tab) => {
+    console.log(url.slice(0, 9))
+    if (url.slice(0, 9) === 'chrome://') {
+      console.log('close')
+      window.close()
+    }
+
+
     const rootUrl = url.split('/')[2]
     let supportInfo = document.getElementById('support-info');
     let requestSupport = document.getElementById('request-support');
