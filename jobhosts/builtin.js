@@ -32,7 +32,7 @@ const builtInModule = {
       } else {
 
         // Set up doge image
-        let dogePic = getDogeImage(0.16, 0.52)
+        let dogePic = getDogeImage(0.16, 0.47, 0.22, 0.22)
 
         // Set up doge message
         let dogeMsg = getDogeMessage(0.1, 0.6, 0.0, 0.45)
@@ -41,6 +41,7 @@ const builtInModule = {
         // Set up button
         var button = document.createElement('Button')
         button.innerHTML = 'Hide'
+        button.style.bottom = '22px'
         button.classList.add('jobdoge-remove')
         button.addEventListener('click', function() {
           // Update CSS to enable transition
