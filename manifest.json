@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-
-  "name": "JobDoge",
+  "name": "JobDoge: Much assist on job search!",
+  "short_name": "JobDoge",
   "description": "A friendly app to help filter job posts you're not interested in.",
   "version": "1.0",
 
