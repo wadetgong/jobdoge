@@ -87,22 +87,7 @@ window.addEventListener('load', function load() {
       modalContent.style.transform = 'translateY(0px)'
 
       chrome.storage.sync.get(null, listHistory => {
-        const modalContainer = document.querySelector('#jobdoge-modal-container')
-        // Clear children
-        while (modalContainer.firstChild) {
-          modalContainer.removeChild(modalContainer.firstChild);
-        }
-
-        let jobPostArr = []
-        for (let key in listHistory) {
-          jobPostArr.push({key, data: listHistory[key]})
-        }
-        jobPostArr
-          .sort((a, b) => b.data.date - a.data.date)
-          .forEach(jobObj => {
-            let { key, data } = jobObj
-            modalContainer.append(modalModule.buildRow(key, data))
-          })
+        modalModule.updateModalContent(listHistory, modal)
         sendResponse()
       })
     }

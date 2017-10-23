@@ -119,5 +119,35 @@ const modalModule = {
     row.append(buttonDiv)
 
     return row
+  },
+  updateModalContent: (listHistory, modal) => {
+    const modalContainer = document.querySelector('#jobdoge-modal-container')
+    // Clear children
+    while (modalContainer.firstChild) {
+      modalContainer.removeChild(modalContainer.firstChild);
+    }
+
+    let jobPostArr = []
+    for (let key in listHistory) {
+      jobPostArr.push({key, data: listHistory[key]})
+    }
+
+    if (jobPostArr.length) {
+      jobPostArr
+        .sort((a, b) => b.data.date - a.data.date)
+        .forEach(jobObj => {
+          let { key, data } = jobObj
+          modalContainer.append(modalModule.buildRow(key, data))
+        })
+    } else {
+      let noPostsDiv = document.createElement('div')
+      let noPostsMsg = document.createElement('h1')
+      noPostsMsg.style.color = 'lightgray'
+      noPostsMsg.innerText = 'You haven\'t hidden any job posts yet!'
+      noPostsDiv.style.marginTop = '25px'
+      noPostsDiv.style.textAlign = 'center'
+      noPostsDiv.append(noPostsMsg)
+      modal.append(noPostsDiv)
+    }
   }
 }
