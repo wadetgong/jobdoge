@@ -87,7 +87,7 @@ window.addEventListener('load', function load() {
       modalContent.style.transform = 'translateY(0px)'
 
       chrome.storage.sync.get(null, listHistory => {
-        modalModule.updateModalContent(listHistory, modal)
+        modalModule.updateModalContent(listHistory)
         sendResponse()
       })
     }

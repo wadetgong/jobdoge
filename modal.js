@@ -120,7 +120,7 @@ const modalModule = {
 
     return row
   },
-  updateModalContent: (listHistory, modal) => {
+  updateModalContent: listHistory => {
     const modalContainer = document.querySelector('#jobdoge-modal-container')
     // Clear children
     while (modalContainer.firstChild) {
@@ -147,7 +147,7 @@ const modalModule = {
       noPostsDiv.style.marginTop = '25px'
       noPostsDiv.style.textAlign = 'center'
       noPostsDiv.append(noPostsMsg)
-      modal.append(noPostsDiv)
+      modalContainer.append(noPostsDiv)
     }
   }
 }
