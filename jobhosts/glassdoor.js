@@ -103,7 +103,7 @@ const glassdoorModule = {
   getRows: () => {
     const path = window.location.pathname.slice(0, 5)
     if (path === '/inde' || path === '/Jobs') {
-      return [...document.querySelector('.jlGrid').children]
+      return [...document.querySelectorAll('.jl')]
         // Remove irrelavent element with class name showMore
         .filter(element => !element.classList.contains('showMore'))
     } else if (path === '/Job/') {
