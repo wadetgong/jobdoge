@@ -17,10 +17,6 @@
   "content_scripts": [
     {
       "matches": [
-        "http://www.builtinchicago.org/*",
-        "http://www.builtinnyc.com/*",
-        "http://www.builtinla.com/*",
-        "http://www.builtincolorado.com/*",
         "http://*/*",
         "https://*/*"
       ],
@@ -29,6 +25,7 @@
         "utils.js",
         "jobhosts/builtin.js",
         "jobhosts/linkedin.js",
+        "jobhosts/glassdoor.js",
         "modal.js",
         "content.js"
       ],

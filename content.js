@@ -1,4 +1,4 @@
-/* global chrome builtInModule modalModule linkedinModule debounce*/
+/* global chrome builtInModule modalModule linkedinModule debounce glassdoorModule */
 
 // Key: site host, Value: valid single job post pathnames
 const supportedSites = {
@@ -7,6 +7,7 @@ const supportedSites = {
   'www.builtinla.com': builtInModule,
   'www.builtincolorado.com': builtInModule,
   'www.linkedin.com': linkedinModule,
+  'www.glassdoor.com': glassdoorModule,
 }
 const { host } = window.location
 
