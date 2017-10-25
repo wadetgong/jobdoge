@@ -50,7 +50,7 @@ const handleDOMChange = () => {
   if (supportedSites[host]) {
     let newContainers = supportedSites[host].getJobContainers()
 
-    console.log('containersShouldUpdate', containersShouldUpdate(currentContainers, newContainers))
+    // console.log('containersShouldUpdate', containersShouldUpdate(currentContainers, newContainers))
 
     if (containersShouldUpdate(currentContainers, newContainers)) {
       currentContainers = newContainers
@@ -82,6 +82,15 @@ window.addEventListener('load', function load() {
   // Add listener to listen for messages from popup
   chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     const { text, href } = msg
+    let jobKey
+    // href from msg may need to be converted depending on job site
+    if (href) {
+      let { convertUrl } = supportedSites[host]
+      if (convertUrl) jobKey = convertUrl(href)
+      else jobKey = href
+    }
+
+
     if (text === 'open_modal') {
       modal.classList.add('jobdoge-modal-open')
       modal.classList.remove('jobdoge-modal-closed')
@@ -92,22 +101,25 @@ window.addEventListener('load', function load() {
         sendResponse()
       })
     }
+
     if (text === 'hide_status') {
-      chrome.storage.sync.get(href, hideStatus => {
+      chrome.storage.sync.get(jobKey, hideStatus => {
         sendResponse(Object.keys(hideStatus).length > 0)
       })
     }
     if (text === 'hide_post') {
       let { jobTitle, company } = supportedSites[host].getSinglePostInfo()
-      let date = Date.now()
       let data = {}
-      data[href] = {jobTitle, company, host, date}
+      let date = Date.now()
+
+      data[jobKey] = {jobTitle, company, host, date}
       chrome.storage.sync.set(data, () => {
         sendResponse()
       });
     }
     if (text === 'unhide_post') {
-      chrome.storage.sync.remove(href, () => {
+
+      chrome.storage.sync.remove(jobKey, () => {
         sendResponse()
       })
     }

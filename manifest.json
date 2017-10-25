@@ -3,7 +3,7 @@
   "name": "JobDoge: Much assist on job search!",
   "short_name": "JobDoge",
   "description": "A friendly app to help filter job posts you're not interested in.",
-  "version": "1.1.1",
+  "version": "1.2",
 
   "browser_action": {
     "default_icon": "doge.png",

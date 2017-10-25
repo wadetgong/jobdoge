@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let postStatusDescriptor = document.querySelector('#post-status-descriptor')
     let hideButtonContainer = document.querySelector('#hide-button-container')
 
+    console.log('url', url)
+
     if (supportedSites[rootUrl]) {
       supportInfo.innerHTML = `${rootUrl} is supported by JobDoge!`
       supportInfo.style.color = '#099409'
