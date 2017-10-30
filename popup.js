@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
       hideButtonContainer.style.display = 'none'
     }
 
-    chrome.storage.sync.get(null, (items) => {
+    chrome.storage.local.get(null, (items) => {
       console.log('items from storage', items)
       console.log('stringify', JSON.stringify(items))
       console.log('keys from storage', Object.keys(items))

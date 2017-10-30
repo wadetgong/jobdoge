@@ -20,7 +20,7 @@ const traversePosts = (domElements, hiddenPosts) => {
 
 const updatePosts = () => {
   if (supportedSites[host]) {
-    chrome.storage.sync.get(null, listHistory => {
+    chrome.storage.local.get(null, listHistory => {
       traversePosts(
         supportedSites[host].getRows(),
         listHistory
@@ -96,14 +96,14 @@ window.addEventListener('load', function load() {
       modal.classList.remove('jobdoge-modal-closed')
       modalContent.style.transform = 'translateY(0px)'
 
-      chrome.storage.sync.get(null, listHistory => {
+      chrome.storage.local.get(null, listHistory => {
         modalModule.updateModalContent(listHistory)
         sendResponse()
       })
     }
 
     if (text === 'hide_status') {
-      chrome.storage.sync.get(jobKey, hideStatus => {
+      chrome.storage.local.get(jobKey, hideStatus => {
         sendResponse(Object.keys(hideStatus).length > 0)
       })
     }
@@ -113,13 +113,13 @@ window.addEventListener('load', function load() {
       let date = Date.now()
 
       data[jobKey] = {jobTitle, company, host, date}
-      chrome.storage.sync.set(data, () => {
+      chrome.storage.local.set(data, () => {
         sendResponse()
       });
     }
     if (text === 'unhide_post') {
 
-      chrome.storage.sync.remove(jobKey, () => {
+      chrome.storage.local.remove(jobKey, () => {
         sendResponse()
       })
     }

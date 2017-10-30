@@ -52,7 +52,7 @@ const builtInModule = {
           let data = {}
           let date = Date.now()
           data[hrefString] = {jobTitle, company, host, date}
-          chrome.storage.sync.set(data);
+          chrome.storage.local.set(data);
         });
         element.prepend(button)
         button.classList.add('jobdoge-fadeIn')

@@ -88,7 +88,7 @@ const glassdoorModule = {
           let date = Date.now()
           data[hrefString] = {jobTitle, company, host, date}
 
-          chrome.storage.sync.set(data)
+          chrome.storage.local.set(data)
         })
 
         buttonContainer.append(button)

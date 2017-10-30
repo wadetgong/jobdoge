@@ -102,7 +102,7 @@ const modalModule = {
     let unhideButton = document.createElement('button')
     unhideButton.innerHTML = 'Unhide'
     unhideButton.onclick = function() {
-      chrome.storage.sync.remove([url], function() {
+      chrome.storage.local.remove([url], function() {
         console.log('removed url ', url)
         var error = chrome.runtime.lastError
         if (error) console.error(error)
