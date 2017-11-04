@@ -30,6 +30,8 @@ const updatePosts = () => {
 }
 const debouncedUpdatePosts = debounce(updatePosts, 500)
 
+let currentContainers = supportedSites[host] && supportedSites[host].getJobContainers()
+
 const containersShouldUpdate = (oldContainers, newContainers) => {
   if (currentContainers.length !== newContainers.length) return true
 
@@ -45,7 +47,6 @@ const containersShouldUpdate = (oldContainers, newContainers) => {
   return false
 }
 
-let currentContainers = supportedSites[host] && supportedSites[host].getJobContainers()
 const handleDOMChange = () => {
   if (supportedSites[host]) {
     let newContainers = supportedSites[host].getJobContainers()
@@ -90,7 +91,6 @@ window.addEventListener('load', function load() {
       else jobKey = href
     }
 
-
     if (text === 'open_modal') {
       modal.classList.add('jobdoge-modal-open')
       modal.classList.remove('jobdoge-modal-closed')
@@ -107,6 +107,7 @@ window.addEventListener('load', function load() {
         sendResponse(Object.keys(hideStatus).length > 0)
       })
     }
+
     if (text === 'hide_post') {
       let { jobTitle, company } = supportedSites[host].getSinglePostInfo()
       let data = {}
@@ -117,8 +118,8 @@ window.addEventListener('load', function load() {
         sendResponse()
       });
     }
-    if (text === 'unhide_post') {
 
+    if (text === 'unhide_post') {
       chrome.storage.local.remove(jobKey, () => {
         sendResponse()
       })

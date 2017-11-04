@@ -10,15 +10,14 @@ const supportedSites = {
 }
 
 function getCurrentTabUrl(callback) {
-  var queryInfo = {
+  let queryInfo = {
     active: true,
     currentWindow: true
   };
 
   chrome.tabs.query(queryInfo, (tabs) => {
-
-    var tab = tabs[0];
-    var url = tab.url;
+    let tab = tabs[0];
+    let url = tab.url;
     console.assert(typeof url == 'string', 'tab.url should be a string');
     callback(url, tab);
   });
@@ -26,12 +25,9 @@ function getCurrentTabUrl(callback) {
 
 document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url, tab) => {
-    console.log(url.slice(0, 9))
     if (url.slice(0, 9) === 'chrome://') {
-      console.log('close')
       window.close()
     }
-
 
     const rootUrl = url.split('/')[2]
     let supportInfo = document.getElementById('support-info');
@@ -40,8 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let unhidePost = document.querySelector('#unhide-post')
     let postStatusDescriptor = document.querySelector('#post-status-descriptor')
     let hideButtonContainer = document.querySelector('#hide-button-container')
-
-    console.log('url', url)
 
     if (supportedSites[rootUrl]) {
       supportInfo.innerHTML = `${rootUrl} is supported by JobDoge!`
@@ -86,9 +80,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     chrome.storage.local.get(null, (items) => {
-      console.log('items from storage', items)
-      console.log('stringify', JSON.stringify(items))
-      console.log('keys from storage', Object.keys(items))
+      // console.log('items from storage', items)
+      // console.log('stringify', JSON.stringify(items))
+      // console.log('keys from storage', Object.keys(items))
       const hiddenCount = document.querySelector('#hidden-info')
       hiddenCount.innerHTML = `Hidden posts: ${Object.keys(items).length}`
     });
