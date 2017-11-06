@@ -14,6 +14,8 @@ const glassdoorModule = {
   },
   getDataFromElement: element => {
     const host = window.location.host
+    console.log('element')
+    console.dir(element)
     let jobId = element
       .querySelector('.flexbox a')
       .href
@@ -27,15 +29,13 @@ const glassdoorModule = {
       .querySelector('a')
       .innerText
       .trim()
-    let companyStr = [
+    console.log([
       ...element
         .querySelector('.empLoc')
         .firstChild
         .childNodes
-      ]
-      .find(node => node.nodeName === '#text')
-      .data
-      .trim()
+      ])
+    let companyStr = element.querySelector('.empLoc').innerText.split(' – ')
     let company = companyStr.slice(-2) === ' –'
       ? companyStr.slice(0, -2)
       : companyStr
