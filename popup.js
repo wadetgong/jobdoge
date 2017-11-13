@@ -1,10 +1,10 @@
 /* global chrome */
 
 const supportedSites = {
-  'www.builtinchicago.org': [/job\/.[^\s\\]*/g],
-  'www.builtinnyc.com': [/job\/.[^\s\\]*/g],
-  'www.builtinla.com': [/job\/.[^\s\\]*/g],
-  'www.builtincolorado.com': [/job\/.[^\s\\]*/g],
+  // 'www.builtinchicago.org': [/job\/.[^\s\\]*/g],
+  // 'www.builtinnyc.com': [/job\/.[^\s\\]*/g],
+  // 'www.builtinla.com': [/job\/.[^\s\\]*/g],
+  // 'www.builtincolorado.com': [/job\/.[^\s\\]*/g],
   'www.linkedin.com': [/jobs\/view\/.[^\s\\]*/g],
   'www.glassdoor.com': [/job-listing\/.[^\s\\]*/g],
 }

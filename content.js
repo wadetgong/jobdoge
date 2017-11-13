@@ -2,10 +2,10 @@
 
 // Key: site host, Value: valid single job post pathnames
 const supportedSites = {
-  'www.builtinchicago.org': builtInModule,
-  'www.builtinnyc.com': builtInModule,
-  'www.builtinla.com': builtInModule,
-  'www.builtincolorado.com': builtInModule,
+  // 'www.builtinchicago.org': builtInModule,
+  // 'www.builtinnyc.com': builtInModule,
+  // 'www.builtinla.com': builtInModule,
+  // 'www.builtincolorado.com': builtInModule,
   'www.linkedin.com': linkedinModule,
   'www.glassdoor.com': glassdoorModule,
 }
